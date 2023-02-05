@@ -106,11 +106,12 @@ UNIT_FORMAT = "mm"
 
 MACHINE_NAME = "LinuxCNC"
 CORNER_MIN = {"x": 0, "y": 0, "z": 0}
-CORNER_MAX = {"x": 725, "y": 395, "z": 107}
+CORNER_MAX = {"x": 725, "y": 395, "z": 107} #Masse der Metalab-CNC-Fraese
 PRECISION = 3
 
 # Preamble text will appear at the beginning of the GCODE output file.
-PREAMBLE = """(Anfang Praeambel; folgendes immer an den Anfang des Programmes schreiben)
+PREAMBLE = """(Preamble for Metalab CNC - Post processor by luto and ripper, based on Wiki)
+(DO NOT REMOVE THIS FROM YOUR G-CODE)
 G90 (absolute distance mode)
 G17 (Auswahl XY-Arbeitsebene)
 G40 (turn cutter compensation off)
@@ -118,7 +119,6 @@ G49 (Ausschalten der Werkzeuglängenkompensation)
 G54 (Werkstuecknullpunkt in G54 gespeichert)
 G80 (Cancel Motion Modes)
 G94 (Vorschubart ist mm/min)
-
 
 G0 Z70"""
 

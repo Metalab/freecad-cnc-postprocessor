@@ -6,7 +6,7 @@
 
 1. copy (or better: symlink) `linuxcnc_metalab_post.py` to
   * linux: `/usr/lib/freecad/Mod/Path/PathScripts/post/`
-  * windows: ?
+  * windows: `C:\Program Files\FreeCAD 0.20\Mod\Path\PathScripts\post`
   * mac: ?
 2. Job / Output / Processor: select `linuxcnc_metalab`
 3. generate GCode like normal

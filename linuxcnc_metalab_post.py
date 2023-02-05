@@ -110,8 +110,17 @@ CORNER_MAX = {"x": 725, "y": 395, "z": 107}
 PRECISION = 3
 
 # Preamble text will appear at the beginning of the GCODE output file.
-PREAMBLE = """G17 G54 G40 G49 G80 G90
-"""
+PREAMBLE = """(Anfang Praeambel; folgendes immer an den Anfang des Programmes schreiben)
+G90 (absolute distance mode)
+G17 (Auswahl XY-Arbeitsebene)
+G40 (turn cutter compensation off)
+G49 (Ausschalten der Werkzeuglängenkompensation)
+G54 (Werkstuecknullpunkt in G54 gespeichert)
+G80 (Cancel Motion Modes)
+G94 (Vorschubart ist mm/min)
+
+
+G0 Z70"""
 
 # Postamble text will appear following the last operation.
 POSTAMBLE = """M05
@@ -248,6 +257,9 @@ M3 (Spindel dreht im Uhrzeigersinn; entlang der Spindel ins Werkstueck schauend)
         gcode += linenumber() + "(Ende Drehzahlhochlauf)\n"
 
     last_speed = 0
+
+    # ignore setup
+    objectslist = objectslist[1:]
 
     for obj in objectslist:
         if hasattr(obj, "Tool") and hasattr(obj, "ToolNumber"):

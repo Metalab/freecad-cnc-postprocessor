@@ -215,8 +215,45 @@ def export(objectslist, filename, argstring):
         gcode += linenumber() + line + "\n"
     gcode += linenumber() + UNITS + "\n"
 
+    def add_drehzahlhochlauf(current_rate, target_rate):
+        nonlocal gcode
+
+        if current_rate == target_rate:
+            return
+
+        hochlauf_explainer = """(Drehzahlhochlauf-Prozedur:                                                     )
+(Wenn die Spindel kalt ist, muss sie warm gefahren werden, da sonst Genauigkeit )
+(und Lebensdauer der Lager leidet. Beginnend bei 6000U/min wird die Spindel in  )
+(6000er-Schritten hochgefahren, wobei jede Drehzahl für 2min gehalten wird.     )
+(Die letzte Drehzahl des Hochlaufs ist die Einsatzdrehzahl, bei der ebenfalls   )
+(2min gehalten wird, bevor das Werkzeug in Eingriff gebracht wird               )
+M3 (Spindel dreht im Uhrzeigersinn; entlang der Spindel ins Werkstueck schauend)"""
+
+        for line in hochlauf_explainer.splitlines(False):
+            gcode += linenumber() + line + "\n"
+
+        gcode += linenumber() + "\n"
+        gcode += linenumber() + "(" + str(current_rate) + "U/min => " + str(target_rate) + "U/min)\n"
+        gcode += linenumber() + "\n"
+
+        while current_rate != target_rate:
+            if current_rate < target_rate:
+                current_rate = min(current_rate + 6000, target_rate)
+            if current_rate > target_rate:
+                current_rate = max(current_rate - 6000, target_rate)
+            gcode += linenumber() + "(=> " + str(current_rate) + "U/min)\n"
+            gcode += linenumber() + "S" + str(current_rate) + "\n"
+            gcode += linenumber() + "G4 P60.0\n"
+
+        gcode += linenumber() + "(Ende Drehzahlhochlauf)\n"
+
+    last_speed = 0
+
     for obj in objectslist:
         if hasattr(obj, "Tool") and hasattr(obj, "ToolNumber"):
+            print("genderating Drehzahlhochlauf for tool:", obj.Name)
+            add_drehzahlhochlauf(last_speed, obj.SpindleSpeed)
+            last_speed = obj.SpindleSpeed
             print("skipping tool change operation because metalab CNC does not have a tool changer:", obj.Name)
             continue
 

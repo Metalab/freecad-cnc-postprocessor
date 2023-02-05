@@ -106,7 +106,7 @@ UNIT_FORMAT = "mm"
 
 MACHINE_NAME = "LinuxCNC"
 CORNER_MIN = {"x": 0, "y": 0, "z": 0}
-CORNER_MAX = {"x": 500, "y": 300, "z": 300}
+CORNER_MAX = {"x": 725, "y": 395, "z": 107}
 PRECISION = 3
 
 # Preamble text will appear at the beginning of the GCODE output file.

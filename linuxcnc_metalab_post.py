@@ -216,6 +216,9 @@ def export(objectslist, filename, argstring):
     gcode += linenumber() + UNITS + "\n"
 
     for obj in objectslist:
+        if hasattr(obj, "Tool") and hasattr(obj, "ToolNumber"):
+            print("skipping tool change operation because metalab CNC does not have a tool changer:", obj.Name)
+            continue
 
         # Skip inactive operations
         if hasattr(obj, "Active"):

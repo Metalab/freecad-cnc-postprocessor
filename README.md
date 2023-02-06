@@ -5,8 +5,8 @@
 ## Installation
 
 1. Navigate to the menu Macro → Macros...
-2. Press the "Create" button
-3. A new dialog asking for a file name pops up. Enter "linuxcnc_metalab_post.py" and press Ok. ![Dialog](images/macros.png)
+2. Press the "Create" button ![Dialog](images/macros.png)
+3. A new dialog asking for a file name pops up. Enter "linuxcnc_metalab_post.py" and press Ok.
 4. A new window pops up, containing a text editor.
 5. Copy the contents of the file "linuxcnc_metalab_post.py" from this repository into the clipboard and paste it into this text editor.
 6. Save the file, restart FreeCAD.
